@@ -1,10 +1,10 @@
 'use strict';
 
-let App = (function () {
+var App = (function () {
 
-  let App = function () {
+  var App = function () {
 
-    let api = {};
+    var api = {};
 
     api.container = $(`<div id='app'></div>`);
 
@@ -14,57 +14,30 @@ let App = (function () {
   return App;
 })();
 
-let Navbar = (function (options) {
+var Navbar = (function (options) {
 
-  let Navbar = function (options) {
+  var Navbar = function (options) {
 
     //Styling
-    let _style = {
+    var _style = {
       title: `"
         font-family: 'Pacifico';
         font-size: 25pt;
+      "`,
+      navbar: `"
+        box-shadow: 0px 2px 10px rgb(200, 200, 200, 0.5);
       "`
     }
 
-    let updateTheme = function (type, params) {
-      switch (params.theme) {
-        case 'Lightly':
-          api.container.fadeOut(200, function () {
-            api.container.removeClass('navbar-dark bg-dark').addClass('navbar-light bg-light').fadeIn().delay(200);
-          });
-          break;
-        case 'Darkly':
-          api.container.fadeOut(200, function () {
-            api.container.removeClass('navbar-light bg-light').addClass('navbar-dark bg-dark').fadeIn().delay(200);
-          });
-          break;
-      }
-
-      let html = api.container.html();
-    }
-
-    //Event Listeners
-    $(document).on("themeUpdate", updateTheme);
-
-    //Should not be declared inside the class like this, but whatever... time...
-    let themeLink1 = new NavbarThemeLink({ href: '#', text: 'Darkly' });
-    let themeLink2 = new NavbarThemeLink({ href: '#', text: 'Lightly' });
-
-    let api = {};
+    var api = {};
     api.options = options;
     api.container = $(`
-      <nav class="navbar navbar-expand-lg ${api.options.theme === 'Darkly' ? 'navbar-dark' : 'navbar-light'} ${api.options.theme === 'Darkly' ? 'bg-dark' : 'bg-light'}">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light" style=${_style.navbar}>
         <div class="container-fluid">
           <a class="navbar-brand" href="#" style=${_style.title}>${api.options.title}</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-
+        </div>
       </nav>
     `);
-
-    api.container.find("#themeList").append(themeLink1.container);
-    api.container.find("#themeList").append(themeLink2.container);
 
     return api;
 
@@ -73,43 +46,15 @@ let Navbar = (function (options) {
   return Navbar;
 })();
 
-let NavbarThemeLink = (function (options) {
+var Header = (function (title) {
 
-  let NavbarThemeLink = function (options) {
+  var Header = function (title) {
 
-    let api = {};
-    api.options = options;
-    api.container = $(`<a class="dropdown-item" href="#">${api.options.text}</a>`).on('click', function () {
-      switch (api.options.theme) {
-        case 'Lightly':
-          currentTheme = "Lightly";
-          break;
-        case 'Darkly':
-          currentTheme = "Darkly";
-          break;
-      }
-
-      $.event.trigger("themeUpdate", {
-        theme: api.options.text
-      });
-    });
-
-    return api;
-
-  };
-
-  return NavbarThemeLink;
-})();
-
-let Header = (function (title) {
-
-  let Header = function (title) {
-
-    let _style = `"
+    var _style = `"
 
     "`
 
-    let api = {};
+    var api = {};
 
     api.title = title;
     api.container = $(`
@@ -131,45 +76,26 @@ let Header = (function (title) {
   return Header;
 })();
 
-let Footer = (function (title) {
+var Footer = (function (title) {
 
-  let Footer = function (title) {
+  var Footer = function (title) {
 
-    let api = {};
+    var api = {};
 
-    let updateTheme = function (type, params) {
-      switch (params.theme) {
-        case 'Lightly':
-          api.container.fadeOut(200, function () {
-            api.container.removeClass('text-light').addClass('text-dark').fadeIn().delay(200);
-          });
-          break;
-        case 'Darkly':
-          api.container.fadeOut(200, function () {
-            api.container.removeClass('text-dark').addClass('text-light').fadeIn().delay(200);
-          });
-          break;
-      }
-
-      let html = api.container.html();
-    }
-
-    let _style = `"
+    var _style = `"
       position: fixed;
       bottom: 0;
       width: 100%;
+      box-shadow: 0px -2px 10px rgb(200, 200, 200, 0.5);
+      font-size: 11pt;
     "`
 
     api.title = title;
     api.container = $(`
-      <div class="text-center align-middle" style=${_style}>
-        <h6>
-          <p class="my-2">${title}</p>
-        </h6>
+      <div class="text-center align-middle bg-light py-1" style=${_style}>
+      ${title}
       </div>
     `);
-
-    $(document).on("themeUpdate", updateTheme);
 
     return api;
 
@@ -178,13 +104,13 @@ let Footer = (function (title) {
   return Footer;
 })();
 
-let Page = (function (options) {
+var Page = (function (options) {
 
-  let Page = function (options) {
+  var Page = function (options) {
 
-    let api = {};
+    var api = {};
 
-    api.container = $(`<div id="page" class="container-fluid"></div>`);
+    api.container = $(`<div id="page" class="d-flex flex-column justify-content-center"></div>`);
 
     return api;
 
@@ -193,28 +119,33 @@ let Page = (function (options) {
   return Page;
 })();
 
-let Barchart = (function (data, options) {
+var Barchart = (function (data, options) {
 
-  let Barchart = function (data, options) {
+  var Barchart = function (data, options) {
 
-    let chartColor = 'var(--bs-purple)';
-    let labelColor = 'dark';
+    var chartColor = 'var(--bs-purple)';
+    var labelColor = 'dark';
 
-    let api = {};
+    var api = {};
     api.data = data;
     api.options = options;
 
     api.options.maxValue = Math.max.apply(Math, api.data);
 
     //Styling
-    let _style = {
+    var _style = {
+      container: `"
+
+      "`,
       main: `"
+        max-width: ${api.options.maxChartWidth}px;
       "`,
       chart: `"
         display: flex;
         align-items: flex-end;
         border-bottom: 1px solid black;
         border-left: 1px solid black;
+        max-height: ${api.options.maxChartHeight}px;
       "`,
       left: `"
         text-align: center;
@@ -222,34 +153,33 @@ let Barchart = (function (data, options) {
       "`,
       infoPanel: `"
         margin-left: 10px;
+        left: -10px;
+        box-shadow: 0px 2px 10px rgb(200, 200, 200, 0.5);
+      "`,
+      label: `"
+        font-size: 10pt;
+      "`,
+      heading: `"
+        font-family: 'Pacifico';
+      "`,
+      closeButton: `"
+      position: absolute;
+      right: 0px;
+      top: -24px;
+      width: 50px;
+      height: 50px;
+      line-height: 0em;
+      padding: 5px;
+      vertical-align: center;
+      color: rgb(200,200,200);
+      border-radius: 0px 5px 5px 0px;
+      font-size: 30px;
       "`
     }
 
     //Event Handlers
-    let onUpdateTheme = function (type, params) {
-      switch (params.theme) {
-        case 'Lightly':
-          api.container.fadeOut(200, function () {
-            api.container.removeClass('text-light').addClass('text-dark').fadeIn().delay(200);
-          });
-          $("#barchart_chart").fadeOut(200, function () {
-            $("#barchart_chart").css({ 'border-color': 'black' }).fadeIn().delay(200);
-          });
-          break;
-        case 'Darkly':
-          api.container.fadeOut(200, function () {
-            api.container.removeClass('text-dark').addClass('text-light').fadeIn().delay(200);
-          });
-          $("#barchart_chart").fadeOut(200, function () {
-            $("#barchart_chart").css({ 'border-color': 'white' }).fadeIn().delay(200);
-          });
-          break;
-      }
 
-      let html = api.container.html();
-    }
-
-    let onInputUpdate = function (type, params) {
+    var onInputUpdate = function (type, params) {
       switch (params.id) {
         case 'barchart_input_title':
           api.container.find("#barchart_title").text(params.text);
@@ -264,21 +194,21 @@ let Barchart = (function (data, options) {
 
     }
 
-    let onGenerateRandomData = function () {
+    var onGenerateRandomData = function () {
 
-      let dataLength = Math.round(Math.random() * 10);
-      let dataSet = [];
+      var dataLength = Math.round(Math.random() * 10);
+      var dataSet = [];
 
       //Generate a set of items with labels
-      for (let x = 0; x < dataLength + 1; x++) {
-        let item = {
+      for (var x = 0; x < dataLength + 1; x++) {
+        var item = {
           label: "Item " + x,
           values: []
         }
 
         //Generate data set for each item
-        let valuesLength = Math.round(Math.random() * 5);
-        for (let y = 0; y < valuesLength + 1; y++) {
+        var valuesLength = Math.round(Math.random() * 5);
+        for (var y = 0; y < valuesLength + 1; y++) {
           item.values.push(Math.round(1 + Math.random() * 100));
         }
         item.values.sort((a, b) => a - b);
@@ -289,68 +219,69 @@ let Barchart = (function (data, options) {
 
     }
 
-    let sumItems = function (item) {
 
-      let sum = 0;
+    //Methods
+    var sumItems = function (item) {
 
-      for (let value of item) {
+      var sum = 0;
+
+      for (var value of item) {
         sum += value;
       }
 
       return sum;
     }
 
-    //Methods
-    let generateItems = function (items) {
+    var generateItems = function (items) {
 
-      let itemWidth = (1 / items.length) * 100;
-      let itemTotals = [];
+      var itemWidth = (1 / items.length) * 100;
+      var itemTotals = [];
 
       //Clear the Chart first
       api.container.find("#barchart_chart").empty();
 
       //Calculate maximum value from all items, based on the sum of their values (confusing)
-      for (let item of items) {
+      for (var item of items) {
         itemTotals.push(sumItems(item.values));
       }
-      let maxItemValue = Math.max.apply(Math, itemTotals);
+      var maxItemValue = Math.max.apply(Math, itemTotals);
 
       //Generate and append new items
       if (items) {
         items.map((item) => {
-          let sum = sumItems(item.values);
-          let chartItem = new BarchartItem(item, { color: chartColor, width: itemWidth, maxChartHeight: api.options.maxChartHeight, maxItemValue: maxItemValue, sum: sum });
+          var sum = sumItems(item.values);
+          var chartItem = new BarchartItem(item, { color: chartColor, width: itemWidth, maxChartHeight: api.options.maxChartHeight, maxItemValue: maxItemValue, sum: sum });
           api.container.find("#barchart_chart").append(chartItem.container);
         });
       }
     }
 
-    let generateLeftGraduations = function (graduations) {
+    var generateLeftGraduations = function (graduations) {
 
-      for (let x = 0; x < graduations; x++) {
-        let tickItem = new BarchartIncrement({ height: api.options.maxChartHeight / graduations, width: 20, top: x == 0 ? true : false, value: 100 - (graduations * x) })
+      for (var x = 0; x < graduations; x++) {
+        var tickItem = new BarchartIncrement({ height: api.options.maxChartHeight / graduations, width: 20, top: x == 0 ? true : false, value: 100 - (graduations * x) })
         api.container.find("#barchart_leftIncrements").append(tickItem.container);
       }
     }
 
-    let $input = $(`
-      <div class="d-flex flex-column">
+    var $chartSettings = $(`
+      <div id="chartsettings_container" class="d-flex flex-column>
 
-        <div class="mt-1 text-center" style="font-size: 11pt;">Chart Settings</div>
-
-          <input id="barchart_input_title" type="text" class="form-control" placeholder="Chart Title" aria-label="Chart Title" aria-describedby="basic-addon1" value="Student Performance">
-          <label for="floatingInput">Chart Title</label>
+        <div class="my-2 text-center" style=${_style.heading}><h4>Chart Settings</h4></div>
+          <label for="floatingInput" style=${_style.label}>Chart Title</label>
+          <input id="barchart_input_title" type="text" class="form-control" placeholder="Chart Title" aria-label="Chart Title" aria-describedby="basic-addon1" value="Weightlifting Performance">
         </div>
 
         <div class="form-floating mt-1">
-          <input id="barchart_input_xAxis" type="text" class="form-control" placeholder="X-Axis" aria-label="X-Axis" aria-describedby="basic-addon1" value="Students">
+          <input id="barchart_input_xAxis" type="text" class="form-control" placeholder="X-Axis" aria-label="X-Axis" aria-describedby="basic-addon1" value="Sets">
           <label for="floatingInput">X-Axis Label</label>
         </div>
 
         <div class="form-floating mt-1">
-          <input id="barchart_input_yAxis" type="text" class="form-control" placeholder="Y-Axis" aria-label="Y-Axis aria-describedby="basic-addon1" value="Strength">
+          <input id="barchart_input_yAxis" type="text" class="form-control" placeholder="Y-Axis" aria-label="Y-Axis aria-describedby="basic-addon1" value="Reps">
           <label for="floatingInput">Y-Axis Label</label>
         </div>
+
       </div>
     `).on('input', 'input', function (event) {
       $.event.trigger("titleUpdate", {
@@ -359,48 +290,66 @@ let Barchart = (function (data, options) {
       });
     });
 
-    let $buttonRandomize = $(`
-      <button id="randomButton" type="button" class="btn btn-secondary mt-1">Generate Random Data</button>
+    var $buttonClose = $(`
+      <button id="barchart_close_button" type="button" class="btn btn-light mt-4" style=${_style.closeButton}>✕</button>
+    `).on('click', function () {
+      if($("#barchart_close_button").text() === "▶"){
+        $("#barchart_close_button").animate({right: '0px'});
+        $("#barchart_options").animate({left: '0px'});
+        $("#barchart_close_button").html("✕");
+        $("#barchart_close_button").css({ 'font-size': '30px'});
+        $("#barchart_close_button").toggleClass("shadow-sm");
+      }else{
+        $("#barchart_close_button").animate({right: '-50px'});
+        $("#barchart_options").animate({left: '-255px'});
+        $("#barchart_close_button").html("▶");
+        $("#barchart_close_button").css({ 'box-shadow': 'none', 'font-size' : '20px'});
+        $("#barchart_close_button").toggleClass("shadow-sm");
+      }
+    });
+
+    var $buttonRandomize = $(`
+      <button id="randomButton" type="button" class="btn btn-danger mt-4">Generate Random Data</button>
     `).on('click', function () {
       $.event.trigger('generateRandomData');
     });
 
-    let $buttonColor1 = $(`
+    var $buttonColor1 = $(`
       <button id="buttonColor1" type="button" class="btn m-1" style="height: 30px; width: 30px; background-color: var(--bs-purple)"></button>
     `).on('click', function () {
       chartColor = 'var(--bs-purple)';
       $.event.trigger('chartColorUpdate', { color: chartColor });
     });
 
-    let $buttonColor2 = $(`
+    var $buttonColor2 = $(`
       <button id="buttonColor2" type="button" class="btn m-1" style="height: 30px; width: 30px; background-color: var(--bs-pink)"></button>
     `).on('click', function () {
       chartColor = 'var(--bs-pink)';
       $.event.trigger('chartColorUpdate', { color: chartColor });
     });
 
-    let $buttonColor3 = $(`
+    var $buttonColor3 = $(`
       <button id="buttonColor3" type="button" class="btn m-1" style="height: 30px; width: 30px; background-color: var(--bs-red)"></button>
     `).on('click', function () {
       chartColor = 'var(--bs-red)';
       $.event.trigger('chartColorUpdate', { color: chartColor });
     });
 
-    let $buttonColor4 = $(`
+    var $buttonColor4 = $(`
       <button id="buttonColor4" type="button" class="btn m-1" style="height: 30px; width: 30px; background-color: var(--bs-orange)"></button>
     `).on('click', function () {
       chartColor = 'var(--bs-orange)';
       $.event.trigger('chartColorUpdate', { color: chartColor });
     });
 
-    let $buttonColor5 = $(`
+    var $buttonColor5 = $(`
       <button id="buttonColor5" type="button" class="btn m-1" style="height: 30px; width: 30px; background-color: var(--bs-teal)"></button>
     `).on('click', function () {
       chartColor = 'var(--bs-teal)';
       $.event.trigger('chartColorUpdate', { color: chartColor });
     });
 
-    let $buttonColor6 = $(`
+    var $buttonColor6 = $(`
       <button id="buttonColor6" type="button" class="btn m-1" style="height: 30px; width: 30px; background-color: var(--bs-green)"></button>
     `).on('click', function () {
       chartColor = 'var(--bs-green)';
@@ -408,21 +357,21 @@ let Barchart = (function (data, options) {
     });
 
     //Label Color
-    let $labelColor1 = $(`
+    var $labelColor1 = $(`
       <button id="labelColor1" type="button" class="btn m-1" style="height: 30px; width: 30px; background-color: var(--bs-dark)"></button>
     `).on('click', function () {
       labelColor = 'dark';
       $.event.trigger('labelColorChange', { color: labelColor });
     });
 
-    let $labelColor2 = $(`
+    var $labelColor2 = $(`
       <button id="labelColor2" type="button" class="btn m-1" style="height: 30px; width: 30px; background-color: var(--bs-green)"></button>
     `).on('click', function () {
       labelColor = 'green';
       $.event.trigger('labelColorChange', { color: labelColor });
     });
 
-    let $textPositionSelector = $(`
+    var $textPositionSelector = $(`
     <div class="btn-group" role="group" aria-label="Text Position Selector">
       <button type="button" class="btn btn-secondary" value="Top">Top</button>
       <button type="button" class="btn btn-primary" value="Middle">Middle</button>
@@ -434,7 +383,7 @@ let Barchart = (function (data, options) {
       $.event.trigger('valuePositionChange', { position: event.currentTarget.value });
     });
 
-    let $barSpacingSelector = $(`
+    var $barSpacingSelector = $(`
     <div class="btn-group" role="group" aria-label="Bar Spacing Selector">
       <button type="button" class="btn btn-primary" value="1">1</button>
       <button type="button" class="btn btn-secondary" value="2">2</button>
@@ -446,44 +395,45 @@ let Barchart = (function (data, options) {
       $.event.trigger('barSpacingChange', { spacing: event.currentTarget.value });
     });
 
+    var $colorDiv = $('<div class="d-flex flex-row justify-content-center"></div>');
+    $colorDiv = $colorDiv.add($buttonColor1)
+      .add($buttonColor2)
+      .add($buttonColor3)
+      .add($buttonColor4)
+      .add($buttonColor5)
+      .add($buttonColor6);
+
+    var $labelDiv = $('<div class="d-flex flex-row justify-content-center"></div>');
+    $labelDiv = $labelDiv.add($labelColor1)
+      .add($labelColor2);
+
+    var $barSpacingDiv = $('<div class="d-flex flex-row justify-content-center"></div>');
+    $barSpacingDiv = $barSpacingDiv.add($barSpacingSelector);
+
     // //Add items to section
-    $input.append($buttonRandomize);
-    $input.append('<div class="mt-1 text-center" style="font-size: 11pt;">Data Text Position</div>')
-    $input.append($textPositionSelector);
-
-    // $input.append('<div class="mt-1 text-center" style="font-size: 11pt;">Chart Color</div>')
-    // let $colorDiv = $('<div class="d-flex flex-row justify-content-center"></div>')
-    // $input.append($colorDiv);
-    // $colorDiv.append($buttonColor1);
-    // $colorDiv.append($buttonColor2);
-    // $colorDiv.append($buttonColor3);
-    // $colorDiv.append($buttonColor4);
-    // $colorDiv.append($buttonColor5);
-    // $colorDiv.append($buttonColor6);
-
-    // //Label Color
-    // $input.append('<div class="mt-1 text-center" style="font-size: 11pt;">Label Color</div>')
-    // let $labelDiv = $('<div class="d-flex flex-row justify-content-center"></div>')
-    // $input.append($labelDiv);
-    // $labelDiv.append($labelColor1);
-    // $labelDiv.append($labelColor2);
-
-    // //Bar Spacing
-    // $input.append('<div class="mt-1 text-center" style="font-size: 11pt;">Bar Spacing</div>')
-    // let $barSpacingDiv = $('<div class="d-flex flex-row justify-content-center"></div>')
-    // $input.append($barSpacingDiv);
-    // $barSpacingDiv.append($barSpacingSelector);
+    $chartSettings = $chartSettings
+      .add($buttonClose)
+      .add('<div class="mt-1" style="font-size: 11pt;">Data Text Position</div>')
+      .add($textPositionSelector)
+      .add('<div class="mt-1" style="font-size: 11pt;">Chart Color</div>')
+      .add($colorDiv)
+      .add('<div class="mt-1" style="font-size: 11pt;">Label Color</div>')
+      .add($labelDiv)
+      .add('<div class="mt-1" style="font-size: 11pt;">Bar Spacing</div>')
+      .add($barSpacingDiv)
+      .add('<div class="mt-1" style="font-size: 11pt;"></div>')
+      .add($buttonRandomize);
 
     api.container = $(`
-      <div class="container-fluid w-50" >
+      <div class="container d-flex flex-column justify-content-center" style=${_style.container}>
 
         <div id="barchart_heading" class="row text-center">
           <div class="col"><h1 id="barchart_title" class="mb-5 mt-4">${api.options.title}</h1></div>
         </div>
 
-        <div id="barchart_content" class="d-flex">
+        <div id="barchart_content" class="d-flex flex-row justify-content-center">
           <div id="barchart_left" class="d-flex flex-row float-left">
-            <h5 id="barchart_yAxis" class="text-center" style="writing-mode: vertical-rl; transform: rotate(180deg);">
+            <h5 id="barchart_yAxis" class="text-center position-relative" style="height: ${api.options.maxChartHeight}px; top: 0px; writing-mode: vertical-rl; transform: rotate(180deg);">
               ${api.options.yAxisTitle}
             </h5>
 
@@ -503,8 +453,8 @@ let Barchart = (function (data, options) {
             </div>
           </div>
 
-          <div id="barchart_options" style=${_style.infoPanel}>
-            <div id="barchart_input_title" class="input-group-sm mb-3"></div>
+          <div id="barchart_options" class="position-absolute p-2 bg-light rounded" style=${_style.infoPanel}>
+            <div id="barchart_input_title" class="input-group-sm mb-2"></div>
           </div>
         </div>
       </div>
@@ -513,9 +463,9 @@ let Barchart = (function (data, options) {
     generateItems(api.data);
     generateLeftGraduations(api.options.graduations);
 
-    api.container.find('#barchart_options').append($input);
+    api.container.find('#barchart_options').append($chartSettings);
+
     //Event Listeners
-    $(document).on("themeUpdate", onUpdateTheme);
     $(document).on("titleUpdate", onInputUpdate);
     $(document).on("generateRandomData", onGenerateRandomData);
 
@@ -526,57 +476,37 @@ let Barchart = (function (data, options) {
   return Barchart;
 })();
 
-let BarchartItem = (function (data, options) {
+var BarchartItem = (function (data, options) {
 
-  let BarchartItem = function (data, options) {
+  var BarchartItem = function (data, options) {
 
-    let itemSpacing;
+    var itemSpacing;
 
-    let api = {};
+    var api = {};
     api.data = data;
     api.options = options;
 
-
-    //Event Handlers
-    let onUpdateTheme = function (type, params) {
-      switch (params.theme) {
-        case 'Lightly':
-          api.container.fadeOut(200, function () {
-            api.container.css({ 'background-color': '#ff9b42' }).removeClass('text-light').addClass('text-dark').fadeIn().delay(200);
-          });
-          break;
-        case 'Darkly':
-          api.container.fadeOut(200, function () {
-            api.container.css({ 'background-color': '#ff9b42' }).removeClass('text-dark').addClass('text-light').fadeIn().delay(200);
-          });
-          break;
-      }
-
-      let html = api.container.html();
-    }
-
-    let onChartColorUpdate = function (type, params) {
+    var onChartColorUpdate = function (type, params) {
       api.container.css({
         'background-color': params.color
       });
     }
 
-    let onChartLabelColorChange = function (type, params) {
-
+    var onChartLabelColorChange = function (type, params) {
 
       switch (params.color) {
         case 'dark':
-          api.container.find('#barchart_label_text').css({ 'color': 'var(--bs-dark)' });
+          api.container.find("#barchart_label_text").css({ 'color': 'var(--bs-dark)' });
           break;
         case 'green':
-          api.container.find('#barchart_label_text').css({ 'color': 'var(--bs-green)' });
+          api.container.find("#barchart_label_text").css({ 'color': 'var(--bs-green)' });
           break;
         default:
           break;
       }
     }
 
-    let onBarSpacingChange = function (type, params) {
+    var onBarSpacingChange = function (type, params) {
 
       api.container
         .removeClass(`mx-${itemSpacing}`)
@@ -586,28 +516,27 @@ let BarchartItem = (function (data, options) {
 
     }
 
-    let onValuePositionChange = function (type, params) {
+    var onValuePositionChange = function (type, params) {
 
       switch (params.position) {
         case 'Top':
-          api.container.removeClass('justify-content-start justify-content-center justify-content-end').addClass('justify-content-start');
+          api.container.find('#barchart_item_group_item').removeClass('align-items-center align-items-start align-items-end').addClass('align-items-start');
           break;
         case 'Middle':
-          api.container.removeClass('justify-content-start justify-content-center justify-content-end').addClass('justify-content-center');
+          api.container.find('#barchart_item_group_item').removeClass('align-items-center align-items-start align-items-end').addClass('align-items-center');
           break;
         case 'Bottom':
-          api.container.removeClass('justify-content-start justify-content-center justify-content-end').addClass('justify-content-end');
+          api.container.find('#barchart_item_group_item').removeClass('align-items-center align-items-start align-items-end').addClass('align-items-end');
           break;
         default:
           break;
       }
     }
 
-    let generateDataGroup = function (item) {
-
+    var generateDataGroup = function (item) {
 
       //get maximum height based on chart max
-      let totalItemHeight = (api.options.sum / api.options.maxItemValue) * api.options.maxChartHeight;
+      var totalItemHeight = (api.options.sum / api.options.maxItemValue) * api.options.maxChartHeight;
 
       //Clear the Group first
       api.container.find("#barchart_item_group").empty();
@@ -615,22 +544,25 @@ let BarchartItem = (function (data, options) {
       //Generate and append new items to group
       if (item.values) {
         item.values.forEach(function (item, index, array) {
-          let valueHeight = (item / api.options.maxItemValue) * totalItemHeight;
-          api.container.find("#barchart_item_group").append(`<div style="height: ${valueHeight}px; background-color: var(--bs-purple); opacity: ${index / array.length}"></div>`);
+          var valueHeight = (item / api.options.maxItemValue) * totalItemHeight;
+          api.container.find("#barchart_item_group").append(`
+            <div id="barchart_item_group_item" class="d-flex flex-row justify-content-center align-items-center" style="height: ${valueHeight}px; min-height: 1.5em; font-size: 9pt; background-color: rgba(255,255,255,${0.9 - (index / array.length)});">
+              <div>
+              ${item}
+              </div>
+            </div>
+          `);
         })
       }
     }
 
-    //Event Listeners
-    $(document).on("themeUpdate", onUpdateTheme);
-    $(document).on("chartColorUpdate", onChartColorUpdate);
-
-    let _style = {
+    var _style = {
       bar: `"
         width: ${options.width}%;
         height: ${options.maxHeight}px;
         min-height: 1.5em;
         position: relative;
+        background-color: var(--bs-purple);
       "`,
       label: `"
         position: absolute;
@@ -644,7 +576,7 @@ let BarchartItem = (function (data, options) {
         transform: rotate(180deg);
         line-height: 0em;
         margin-top: 20px;
-        font-size: 11px;
+        font-size: 14px;
       "`
     }
 
@@ -653,22 +585,22 @@ let BarchartItem = (function (data, options) {
         <div class="flex-grow-1">
           <div id="barchart_item_group"></div>
           <div style=${_style.label}>
-            <div id="barchart_label_text" style=${_style.labelText}>A3445X</div>
+            <div id="barchart_label_text" style=${_style.labelText}>${api.options.sum}</div>
           </div>
         </div>
       </span>
     `);
 
-    let $dataContent = $(`
+    var $dataContent = $(`
       <div>${api.options.sum}</div>
     `)
 
     $(document).on("valuePositionChange", onValuePositionChange);
     $(document).on("labelColorChange", onChartLabelColorChange);
     $(document).on("barSpacingChange", onBarSpacingChange);
+    $(document).on("chartColorUpdate", onChartColorUpdate);
 
     generateDataGroup(api.data);
-
 
     return api;
 
@@ -677,35 +609,14 @@ let BarchartItem = (function (data, options) {
   return BarchartItem;
 })();
 
-let BarchartIncrement = (function (options) {
+var BarchartIncrement = (function (options) {
 
-  let BarchartIncrement = function (options) {
+  var BarchartIncrement = function (options) {
 
-    let api = {};
+    var api = {};
     api.options = options;
 
-    //There are better ways to handle this
-    let updateTheme = function (type, params) {
-      switch (params.theme) {
-        case 'Lightly':
-          api.container.fadeOut(200, function () {
-            api.container.css({ 'border-color': 'black' }).fadeIn().delay(200);
-          });
-          break;
-        case 'Darkly':
-          api.container.fadeOut(200, function () {
-            api.container.css({ 'border-color': 'white' }).fadeIn().delay(200);
-          });
-          break;
-      }
-
-      let html = api.container.html();
-    }
-
-    //Event Listeners
-    $(document).on("themeUpdate", updateTheme);
-
-    let _style = {
+    var _style = {
       tick: `"
         width: ${api.options.width}px;
         border-bottom: 1px solid black;
@@ -730,10 +641,10 @@ let BarchartIncrement = (function (options) {
   return BarchartIncrement;
 })();
 
-let app = new App();
-let mainpage = new Page();
+var app = new App();
+var mainpage = new Page();
 
-let testData = [
+var testData = [
   {
     label: "X0001",
     values: [10, 12, 21]
@@ -744,15 +655,15 @@ let testData = [
   },
   {
     label: "X00013",
-    values: [90, 44, 3]
+    values: [3, 44, 90]
   },
 ];
 
-let drawBarChart = function(data, options, element){
+var drawBarChart = function (data, options, element) {
 
-  let navbar = new Navbar({ title: "Barchart App" });
-  let footer = new Footer("Lighthouse Labs Barchart App - Brandon Macdonald 2021");
-  let barchart = new Barchart(data, { xAxisTitle: options.xAxisTitle, yAxisTitle: options.yAxisTitle, graduations: options.graduations, maxChartHeight: options.height, maxChartWidth: options.width, title: options.title, });
+  var navbar = new Navbar({ title: "Barchart App" });
+  var footer = new Footer("Lighthouse Labs Barchart App - Brandon Macdonald 2021");
+  var barchart = new Barchart(data, { xAxisTitle: options.xAxisTitle, yAxisTitle: options.yAxisTitle, graduations: options.graduations, maxChartHeight: options.height, maxChartWidth: options.width, title: options.title, });
 
   element.container.append(barchart.container);
   app.container.append(navbar.container);
@@ -760,27 +671,13 @@ let drawBarChart = function(data, options, element){
   app.container.append(footer.container);
 
   $("body")
-    .css({ 'background-color': 'var(--bs-light)' })
+    .css({ 'background-color': 'rgb(244, 244, 244)' })
     .append(app.container);
 };
 
 $(document).ready(function () {
 
-  let onUpdateTheme = function (type, params) {
-    switch (params.theme) {
-      case 'Lightly':
-        $("body").css({ 'background-color': 'var(--bs-light)' });
-        break;
-      case 'Darkly':
-        $("body").css({ 'background-color': 'var(--bs-dark)' });
-        break;
-    }
-  }
-
-  //Event Listeners
-  $(document).on("themeUpdate", onUpdateTheme);
-
   //Initalize App
-  drawBarChart(testData, {width: 500, height: 500, xAxisTitle: "Students", yAxisTitle: "Strength", graduations: 10, maxChartHeight: 500, title: "Student Performance",}, mainpage);
+  drawBarChart(testData, { title: "Weightlifting Performance", width: 500, height: 500, xAxisTitle: "Sets", yAxisTitle: "Reps", graduations: 10, height: 500, width: 500 }, mainpage);
 
 });
