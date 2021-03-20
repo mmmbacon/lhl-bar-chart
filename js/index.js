@@ -125,6 +125,8 @@ var Barchart = (function (data, options) {
 
     var chartColor = 'var(--bs-purple)';
     var labelColor = 'dark';
+    var titleColor = 'var(--bs-dark)';
+    var titleSize = '22pt';
 
     var api = {};
     api.data = data;
@@ -153,6 +155,7 @@ var Barchart = (function (data, options) {
       "`,
       infoPanel: `"
         margin-left: 10px;
+        top: 100px;
         left: -10px;
         box-shadow: 0px 2px 10px rgb(200, 200, 200, 0.5);
       "`,
@@ -219,6 +222,27 @@ var Barchart = (function (data, options) {
 
     }
 
+    var onTitleColorChange = function (type, params) {
+      api.container.find("#barchart_title").css({ 'color': params.color });
+    }
+
+    var onTitleSizeChange = function (type, params) {
+      switch (params.size) {
+        case 'Small':
+          api.container.find("#barchart_title").css({ 'font-size': '12pt' });
+          break;
+        case 'Medium':
+          api.container.find("#barchart_title").css({ 'font-size': '18pt' });
+          break;
+        case 'Large':
+          api.container.find("#barchart_title").css({ 'font-size': '22pt' });
+          break;
+        default:
+          break;
+      }
+
+    }
+
 
     //Methods
     var sumItems = function (item) {
@@ -270,7 +294,8 @@ var Barchart = (function (data, options) {
         <div class="my-2 text-center" style=${_style.heading}><h4>Chart Settings</h4></div>
           <label for="floatingInput" style=${_style.label}>Chart Title</label>
           <input id="barchart_input_title" type="text" class="form-control" placeholder="Chart Title" aria-label="Chart Title" aria-describedby="basic-addon1" value="Weightlifting Performance">
-        </div>
+          <div></div>
+          </div>
 
         <div class="form-floating mt-1">
           <input id="barchart_input_xAxis" type="text" class="form-control" placeholder="X-Axis" aria-label="X-Axis" aria-describedby="basic-addon1" value="Sets">
@@ -293,17 +318,17 @@ var Barchart = (function (data, options) {
     var $buttonClose = $(`
       <button id="barchart_close_button" type="button" class="btn btn-light mt-4" style=${_style.closeButton}>✕</button>
     `).on('click', function () {
-      if($("#barchart_close_button").text() === "▶"){
-        $("#barchart_close_button").animate({right: '0px'});
-        $("#barchart_options").animate({left: '0px'});
+      if ($("#barchart_close_button").text() === "▶") {
+        $("#barchart_close_button").animate({ right: '0px' });
+        $("#barchart_options").animate({ left: '0px' });
         $("#barchart_close_button").html("✕");
-        $("#barchart_close_button").css({ 'font-size': '30px'});
+        $("#barchart_close_button").css({ 'font-size': '30px' });
         $("#barchart_close_button").toggleClass("shadow-sm");
-      }else{
-        $("#barchart_close_button").animate({right: '-50px'});
-        $("#barchart_options").animate({left: '-255px'});
+      } else {
+        $("#barchart_close_button").animate({ right: '-50px' });
+        $("#barchart_options").animate({ left: '-255px' });
         $("#barchart_close_button").html("▶");
-        $("#barchart_close_button").css({ 'box-shadow': 'none', 'font-size' : '20px'});
+        $("#barchart_close_button").css({ 'box-shadow': 'none', 'font-size': '20px' });
         $("#barchart_close_button").toggleClass("shadow-sm");
       }
     });
@@ -371,6 +396,35 @@ var Barchart = (function (data, options) {
       $.event.trigger('labelColorChange', { color: labelColor });
     });
 
+    //Title Color
+    var $titleColor1 = $(`
+      <button id="labelColor1" type="button" class="btn m-1" style="height: 30px; width: 30px; background-color: var(--bs-red)"></button>
+    `).on('click', function () {
+      titleColor = 'var(--bs-red)';
+      $.event.trigger('titleColorChange', { color: titleColor });
+    });
+
+    var $titleColor2 = $(`
+      <button id="labelColor2" type="button" class="btn m-1" style="height: 30px; width: 30px; background-color: var(--bs-primary)"></button>
+    `).on('click', function () {
+      titleColor = 'var(--bs-primary)';
+      $.event.trigger('titleColorChange', { color: titleColor });
+    });
+
+    //Title Size
+    var $titleSizeSelector = $(`
+    <div class="btn-group" role="group" aria-label="Bar Spacing Selector">
+      <button type="button" class="btn btn-secondary" value="Small">Small</button>
+      <button type="button" class="btn btn-secondary" value="Medium">Medium</button>
+      <button type="button" class="btn btn-primary" value="Large">Large</button>
+    </div>
+    `).on('click', '.btn', function (event) {
+      $(this).parent().find('.btn').removeClass('btn-primary').addClass('btn-secondary');
+      $(this).removeClass('btn-secondary').addClass('btn-primary');
+      $.event.trigger('titleSizeChange', { size: event.currentTarget.value });
+    });
+
+    //Label Position
     var $textPositionSelector = $(`
     <div class="btn-group" role="group" aria-label="Text Position Selector">
       <button type="button" class="btn btn-secondary" value="Top">Top</button>
@@ -419,6 +473,11 @@ var Barchart = (function (data, options) {
       .add($colorDiv)
       .add('<div class="mt-1" style="font-size: 11pt;">Label Color</div>')
       .add($labelDiv)
+      .add('<div class="mt-1" style="font-size: 11pt;">Title Color</div>')
+      .add($titleColor1)
+      .add($titleColor2)
+      .add('<div class="mt-1" style="font-size: 11pt;">Title Size</div>')
+      .add($titleSizeSelector)
       .add('<div class="mt-1" style="font-size: 11pt;">Bar Spacing</div>')
       .add($barSpacingDiv)
       .add('<div class="mt-1" style="font-size: 11pt;"></div>')
@@ -428,7 +487,7 @@ var Barchart = (function (data, options) {
       <div class="container d-flex flex-column justify-content-center" style=${_style.container}>
 
         <div id="barchart_heading" class="row text-center">
-          <div class="col"><h1 id="barchart_title" class="mb-5 mt-4">${api.options.title}</h1></div>
+          <div class="col"><h1 id="barchart_title" class="mb-5 mt-4" style="font-size: ${titleSize}">${api.options.title}</h1></div>
         </div>
 
         <div id="barchart_content" class="d-flex flex-row justify-content-center">
@@ -467,6 +526,8 @@ var Barchart = (function (data, options) {
 
     //Event Listeners
     $(document).on("titleUpdate", onInputUpdate);
+    $(document).on("titleColorChange", onTitleColorChange);
+    $(document).on("titleSizeChange", onTitleSizeChange);
     $(document).on("generateRandomData", onGenerateRandomData);
 
     return api;
@@ -496,10 +557,10 @@ var BarchartItem = (function (data, options) {
 
       switch (params.color) {
         case 'dark':
-          api.container.find("#barchart_label_text").css({ 'color': 'var(--bs-dark)' });
+          api.container.css({ 'color': 'var(--bs-dark)' });
           break;
         case 'green':
-          api.container.find("#barchart_label_text").css({ 'color': 'var(--bs-green)' });
+          api.container.css({ 'color': 'var(--bs-green)' });
           break;
         default:
           break;
