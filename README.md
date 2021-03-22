@@ -24,6 +24,7 @@ I ideally set out on this project to create a functional bar chart app that had 
 * ```xAxisTitle```: The title of the X-Axis for the data set
 * ```yAxisTitle```: The title of the Y-Axis for the data set
 * ```graduations```: The amount of graduations on the chart
+
 ```component```: [Object] The DOM component we are attaching the chart to
     
 # Known Issues / Bugs
