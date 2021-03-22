@@ -8,8 +8,7 @@ The project is for lighthouse labs web development bootcamp.
 
 Example Screenshots (embedded within the readme as image tags)
 
-![GitHub Logo](/images/logo.png)
-Format: ![Alt Text](url)
+![Chart Options](img/chart-options.png)
 
 List the API functions that you would expect a user to use
 The drawBarChart function takes a data object, and an options parameter for specifying:
