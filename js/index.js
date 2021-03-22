@@ -155,7 +155,6 @@ var Barchart = (function (data, options) {
       "`,
       infoPanel: `"
         margin-left: 10px;
-        top: 100px;
         left: -10px;
         box-shadow: 0px 2px 10px rgb(200, 200, 200, 0.5);
       "`,
@@ -194,7 +193,6 @@ var Barchart = (function (data, options) {
           api.container.find("#barchart_yAxis").text(params.text);
           break;
       }
-
     }
 
     var onGenerateRandomData = function () {
@@ -227,6 +225,7 @@ var Barchart = (function (data, options) {
     }
 
     var onTitleSizeChange = function (type, params) {
+
       switch (params.size) {
         case 'Small':
           api.container.find("#barchart_title").css({ 'font-size': '12pt' });
@@ -725,8 +724,10 @@ var drawBarChart = function (data, options, element) {
   var navbar = new Navbar({ title: "Barchart App" });
   var footer = new Footer("Lighthouse Labs Barchart App - Brandon Macdonald 2021");
   var barchart = new Barchart(data, { xAxisTitle: options.xAxisTitle, yAxisTitle: options.yAxisTitle, graduations: options.graduations, maxChartHeight: options.height, maxChartWidth: options.width, title: options.title, });
+  var barchart2 = new Barchart(data, { xAxisTitle: options.xAxisTitle, yAxisTitle: options.yAxisTitle, graduations: options.graduations, maxChartHeight: options.height, maxChartWidth: options.width, title: options.title, });
 
   element.container.append(barchart.container);
+  element.container.append(barchart2.container);
   app.container.append(navbar.container);
   app.container.append(mainpage.container);
   app.container.append(footer.container);
