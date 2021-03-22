@@ -6,7 +6,7 @@ This is a stretch project for the lighthouse labs web development course. It use
 
 # Functionality
 ![Chart Options](img/chart-options.png)
-These are the options for changing the chart settings
+<p>These are the options for changing the chart settings</p>
 ![Chart](img/chart.png)
 This chart shows the X-Axis title along the bottom. The Y-Axis title on the left side of the chart. The chart title. The chart content.
 
