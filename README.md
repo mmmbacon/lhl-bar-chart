@@ -6,8 +6,9 @@ This is a stretch project for the lighthouse labs web development course. It use
 # Functionality
 ![Chart Options](img/chart-options.png)
 <p>These are the options for changing the chart settings</p>
+
 ![Chart](img/chart.png)
-This chart shows the X-Axis title along the bottom. The Y-Axis title on the left side of the chart. The chart title. The chart content.
+<p>This chart shows the X-Axis title along the bottom. The Y-Axis title on the left side of the chart. The chart title. The chart content.</p>
 
 The drawBarChart function takes a data object, and an options parameter for specifying:
     title: Title of the Chart
