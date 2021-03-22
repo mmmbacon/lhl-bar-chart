@@ -10,14 +10,18 @@ This is a stretch project for the lighthouse labs web development course. It use
 ![Chart](img/chart.png)
 <p>This chart shows the X-Axis title along the bottom. The Y-Axis title on the left side of the chart. The chart title. The chart content.</p>
 
-The drawBarChart function takes a data object, and an options parameter for specifying:
-    title: Title of the Chart
-    width: Width of the chart on the page 
-    height: Height of the chart on the page 
-    xAxisTitle: The title of the X-Axis for the data set
-    yAxisTitle: The title of the Y-Axis for the data set
-    graduations: The amount of graduations on the chart
-The final parameter of the function is the DOM component we are attaching the chart to.
+# API
+```drawBarChart(data, {options}, component)```
+
+```data``` [Array] Initial data set input into function.  
+```{options}```[Object]
+* ```title```: Title of the Chart
+* ```width```: Width of the chart on the page 
+* ```height```: Height of the chart on the page 
+* ```xAxisTitle```: The title of the X-Axis for the data set
+* ```yAxisTitle```: The title of the Y-Axis for the data set
+* ```graduations```: The amount of graduations on the chart
+```component```: [Object] The DOM component we are attaching the chart to
     
 # Known Issues / Bugs
 * Chart does not currently encapsulate events - events are triggered on all charts on the page.
