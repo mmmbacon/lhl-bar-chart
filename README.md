@@ -1,11 +1,15 @@
-#About
+Page can be found here: https://mmmbacon.github.io/lhl-bar-chart/
+
+# About
+
 This is a stretch project for the lighthouse labs web development course. It uses HTML, CSS, Javascript and JQuery to render a barchart to a page. I have used bootstrap to simplify the component design and layout. The chart is code uses a revealing module pattern and string literals to create templated and re-usable classes in JS.
 
 The project is for lighthouse labs web development bootcamp.  
 
 Example Screenshots (embedded within the readme as image tags)
 
-
+![GitHub Logo](/images/logo.png)
+Format: ![Alt Text](url)
 
 List the API functions that you would expect a user to use
 The drawBarChart function takes a data object, and an options parameter for specifying:
