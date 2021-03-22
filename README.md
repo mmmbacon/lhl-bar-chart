@@ -3,12 +3,15 @@
 # About
 This is a stretch project for the lighthouse labs web development course. It uses HTML, CSS, Javascript and JQuery to render a barchart to a page. I have used bootstrap to simplify the component design and layout. The chart is code uses a revealing constructor pattern and string literals to create templated and re-usable classes in JS.
 
+# Challenges/Lessons Learned
+I ideally set out on this project to create a page that had resuable jQuery components. After some initial reading up on jQuery application design, I decided the best way to design the application was using a revealing constructor pattern. This would allow me to treat each component of the chart as a 'class' in a resuable fashion - This was probably inspired by my experience with React. Lack of forward thinking and overall application structure consideration has created a problem now where my events are firing globally and I am not controlling event propagation. This results in all charts recieving events when a single button or input is changed in a chart.
+
 # Functionality
 ![Chart Options](img/chart-options.png)
-<p>These are the options for changing the chart settings</p>
+<p>This panel appears per chart object on the page and will control chart settings. Every change on this panel is reflected on the chart in real time through custom event dispachers.</p>
 
 ![Chart](img/chart.png)
-<p>This chart shows the X-Axis title along the bottom. The Y-Axis title on the left side of the chart. The chart title. The chart content.</p>
+<p>This example shows the X-Axis title along the bottom, the Y-Axis title on the left side of the chart, the chart title and the chart data groups. Each data group has values which are sorted in ascending orer and labeled.</p>
 
 # API
 ```drawBarChart(data, {options}, component)```
@@ -24,13 +27,13 @@ This is a stretch project for the lighthouse labs web development course. It use
 ```component```: [Object] The DOM component we are attaching the chart to
     
 # Known Issues / Bugs
-* Chart does not currently encapsulate events - events are triggered on all charts on the page.
+* Chart does not currently encapsulate events - events are triggered on all charts on the page
 * Page does not scale well for very small devices
 * Data values limited to 100 maximum
 
 # Feature Roadmap
-* Encapsulation improvements including controlling event propagation. 
-* Integrate chart options panel into the chart for usability improvements.
+* Encapsulation improvements including controlling event propagation
+* Integrate chart options panel into the chart for usability improvements
 * Custom colors for each data segment
 
 # Resources
