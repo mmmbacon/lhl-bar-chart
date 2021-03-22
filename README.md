@@ -1,10 +1,10 @@
 --> https://mmmbacon.github.io/lhl-bar-chart/
 
 # About
-This is a stretch project for the lighthouse labs web development course. It uses HTML, CSS, Javascript and JQuery to render a barchart to a page. I have used bootstrap to simplify the component design and layout. The chart is code uses a revealing constructor pattern and string literals to create templated and re-usable classes in JS.
+This is a stretch project for the lighthouse labs web development course. It uses HTML, CSS, Javascript and the JQuery Library to render a customizable barchart to a web page. The chart code uses revealing constructor patterns and string literals to create templated and re-usable components in JS. For the chart data, a default set of values is provided on initialization, and a random data generation button is provided to highlight some of the requirements from the challenge. I have used bootstrap to create a consistent design theme throughout the application.
 
 # Challenges/Lessons Learned
-I ideally set out on this project to create a page that had resuable jQuery components. After some initial reading up on jQuery application design, I decided the best way to design the application was using a revealing constructor pattern. This would allow me to treat each component of the chart as a 'class' in a resuable fashion - This was probably inspired by my experience with React. Lack of forward thinking and overall application structure consideration has created a problem now where my events are firing globally and I am not controlling event propagation. This results in all charts recieving events when a single button or input is changed in a chart.
+I ideally set out on this project to create a functional bar chart app that had resuable jQuery components. After some initial reading up on jQuery application design, I decided the best way to create the application was by using several revealing constructor patterns. This would allow me to treat each component of the chart as a 'class' in a resuable fashion - This was probably inspired by my experience with React. Lack of forward thinking and overall application structure consideration has created a problem now where my events are firing globally and I am not controlling event propagation. This results in all charts recieving events when a single button or input is changed in a chart. Time limitations have prevented me from solving this issue.
 
 # Functionality
 ![Chart Options](img/chart-options.png)
