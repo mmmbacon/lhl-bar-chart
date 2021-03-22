@@ -1,4 +1,4 @@
---> https://mmmbacon.github.io/lhl-bar-chart/
+https://mmmbacon.github.io/lhl-bar-chart/
 
 # About
 This is a stretch project for the lighthouse labs web development course. It uses HTML, CSS, Javascript and the JQuery Library to render a customizable barchart to a web page. The chart code uses revealing constructor patterns and string literals to create templated and re-usable components in JS. For the chart data, a default set of values is provided on initialization, and a random data generation button is provided to highlight some of the requirements from the challenge. I have used bootstrap to support responsive web design, and create a consistent design theme throughout the application.
