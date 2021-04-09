@@ -1,3 +1,4 @@
+### Start here:
 https://mmmbacon.github.io/lhl-bar-chart/
 
 # About
